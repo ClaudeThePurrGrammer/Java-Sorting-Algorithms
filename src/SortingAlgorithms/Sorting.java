@@ -98,29 +98,23 @@ public class Sorting
 			}
 	}
 	 
-	 void Insertion()
-		{
-			 
-				System.out.printf("Using Insertion: ");
-				System.out.println("");
-				int min_index = Get_Lowest_Index(array) ;
-				Swap(array,min_index , 0);
-				for(int i = 1 ; i<array.length-1 ; i++)
-				{
-					int x = array[i++] ;
-					for(int j = i ; j<1 ; j--)
-					{
-						if(Order_Relation(array[j] , x , choice)==true) break;
-					
-						for(int h = i ; h > j ; h--)
-						{
-							array[h+1] = array[h] ; 
-							array[j+1] = x;
-						}
-						
-					
-					}
-				}
+	 void Insertion() {
+		    System.out.printf("Using Insertion:");
+		    System.out.println("");
+
+		    for (int i = 1; i < array.length; i++) {
+		        int x = array[i];      
+		        int j = i - 1;
+
+		        
+		        while (j >= 0 && array[j] > x) {
+		            array[j + 1] = array[j];
+		            j--;
+		        }
+
+		        
+		        array[j + 1] = x;
+		    }
 		}
 	 
 	 void Shell()
@@ -134,42 +128,19 @@ public class Sorting
 	
 	 
 	
-	 void Quick(int[] array, int inf, int sup) {
-		    if (inf < sup) {   
-		        int pos = Partition(array, inf, sup);
+	 void Quick(int[] array, int low, int high) {
+		    if (low < high) 
+		    {   
+		        int pos = Partition(array, low, high);
+		        Quick(array , low , pos-1 );
+		        Quick(array , pos+1 , high);
+		    }
 
 		        
-		        if ((pos - inf) < (sup - pos)) {
-		            if (inf < pos - 1) Quick(array, inf, pos - 1);
-		            if (pos < sup) Quick(array, pos, sup);
-		        } else {
-		            if (pos < sup) Quick(array, pos, sup);
-		            if (inf < pos - 1) Quick(array, inf, pos - 1);
-		        }
-		    }
+
 		}
 
-	 private int Partition(int[] array, int inf, int sup) {
-		    int med = (inf + sup) / 2;
-		    int pivot = array[med];
-
-		    Swap(array, inf, med);
-
-		    int i = inf;
-		    int j = sup;
-
-		    while (i <= j) {
-		        while (i <= sup && Order_Relation(array[i], pivot, choice)) i++;
-		        while (j >= inf && Order_Relation(pivot, array[j], choice)) j--;
-
-		        if (i <= j) {
-		            Swap(array, i, j);
-		            i++;
-		            j--;
-		        }
-		    }
-		    return i; // indice di separazione
-		}
+	
 		
 	 
 	
@@ -220,7 +191,7 @@ public class Sorting
 	
 	
 	
-	private  int Get_Lowest_Index(int[] array)
+	/*private  int Get_Lowest_Index()
 	{
 		
 		int min_index = 0 ;
@@ -232,6 +203,7 @@ public class Sorting
 		return min_index ; 
 	}
 	
+	*/
 	
 	private void Order_Chain(int[] array, int inc) 
 	{
@@ -254,6 +226,7 @@ public class Sorting
 		
 		
 	}
+	
 	
 	private void Swap_Chain(int[] array , int inc , int i )
 	{
@@ -285,34 +258,54 @@ public class Sorting
 			k+=inc;
 		}
 	}
-	
-	
-	/*private int Partition(int[] array, int inf, int sup) {
-	    int med = (inf + sup) / 2;
-	    int pivot = array[med];
-
-	    Swap(array, inf, med);
-
-	    int i = inf;
-	    int j = sup;
-
-	    while (i <= j) {
-	        while (i <= sup && Order_Relation(array[i], pivot, choice)) {
-	            i++;
-	        }
-	        while (j >= inf && Order_Relation(pivot, array[j], choice)) {
-	            j--;
-	        }
-
-	        if (i <= j) {
-	            Swap(array, i, j);
-	            i++;
-	            j--;
-	        }
+	// FOR QUICKSORT
+	private static boolean Order_Relation_Left(int a, int pivot, String s) {
+	    switch(s) {
+	        case "ASC":  return a < pivot;
+	        case "DESC": return a > pivot;
+	        default:     return a < pivot;
 	    }
-	    return i;
 	}
-	*/
+
+	private static boolean Order_Relation_Right(int a, int pivot, String s) {
+	    switch(s) {
+	        case "ASC":  return a > pivot;
+	        case "DESC": return a < pivot;
+	        default:     return a > pivot;
+	    }
+	}
+	//----------------------
+	
+	
+	 private int Partition(int[] array, int low, int high) {
+		 int mid = low + (high - low) / 2;   
+	        int pivot = array[mid];             
+
+	        int i = low;
+	        int j = high;
+
+	        while (i <= j) {
+	        	
+	        	while (i <= high && Order_Relation_Left(array[i], pivot, choice)) {
+	        	    i++;
+	        	}
+	        	while (j >= low && Order_Relation_Right(array[j], pivot, choice)) {
+	        	    j--;
+	        	}
+	           
+	            if (i <= j) {
+	                Swap(array, i, j);
+	                i++;
+	                j--;
+	            }
+	        }
+	        return i;
+	    }
+
+
+
+	
+	
 }
 		
 		
