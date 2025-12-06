@@ -4,14 +4,16 @@ import java.util.Scanner ;
 
 public class Sorting
 {
+	
+	// INITIALIZING
 	int dim ; 
 	static boolean condition ;
 	int[] array = new int[dim] ; 
 	public static Scanner input = new Scanner(System.in) ; 
 	String choice = get_Choice();
+	//----------------
 	
-	
-	
+	//ALGORITHM'S SETUP
 	private static String get_Choice()
 	{
 		System.out.printf("Select Order Relation [ASC/DESC] (default ASC) : ");
@@ -29,7 +31,7 @@ public class Sorting
 		
 		do {
 			
-			System.out.printf("Select Algorhitm [BUBBLE/SELECTION/INSERTION/SHELL/QUICK] or [EXIT] to Close the Program : ");
+			System.out.printf("Select Algorhitm [BUBBLE/SELECTION/INSERTION/SHELL/QUICK/MERGE] or [EXIT] to Close the Program : ");
 			algo = input.nextLine().toUpperCase() ;
 			System.out.println("");
 			
@@ -41,6 +43,8 @@ public class Sorting
 			case "SHELL" : Shell(); break;
 			case "QUICK" : System.out.printf("Using Quick: "); System.out.println("");
 						   Quick(this.array , 0 , this.array.length-1); break;
+			case "MERGE" : System.out.printf("Using Merge: "); System.out.println("");
+			   			   Merge(this.array , 0 , this.array.length-1); break;
 						   
 			case "EXIT" : System.out.println("End of Program..."); break;
 			default: 
@@ -53,10 +57,11 @@ public class Sorting
 		return algo ; 
 		
 	}
+	//----------------------
 	
-	
-//--------------------   ALGORITHMS  --------------------
-	
+	  
+	  
+	 //ALGORITHMS  
 	 void  Bubble()
 	{	
 		
@@ -139,12 +144,24 @@ public class Sorting
 		        
 
 		}
+	 
+	 void Merge(int[] array , int low , int high)
+	 {
+		 if(low<high)
+		 {
+			 int med = (low+high)/2 ; 
+			 Merge(array , low , med) ; 
+			 Merge(array , med+1 , high); 
+			 Union(array ,low , med , high);
+		 }
+	 }
+	 //----------------------
 
 	
 		
 	 
 	
-	//--------------------   SUPPORT METHODS  --------------------
+	 //SUPPORT METHODS
 	 
 	 private static boolean Order_Relation(int el_arr_x, int el_arr_y , String s) 
 		{
@@ -301,12 +318,52 @@ public class Sorting
 	        }
 	        return i;
 	    }
+	 //------------------------
 
 
+	private void Union(int array[] , int low , int medium ,  int high)
+	{
+		int l = low  , new_m = medium+1 , x = 0;
+		int[] aux = new int[high - l+1] ; 
+		int start = medium , end = high ;
+		// ciclo principale: confronta elementi delle due metà
+		while(l <= medium && new_m <= high) {
+		    if(Order_Relation(array[l], array[new_m], choice) == true) {
+		        aux[x] = array[l];
+		        l++;
+		    } else {
+		        aux[x] = array[new_m];
+		        new_m++;
+		    }
+		    x++;
+		}
 
+		// copia gli elementi rimasti della prima metà (se ce ne sono)
+		while(l <= medium) {
+		    aux[x] = array[l];
+		    l++;
+		    x++;
+		}
+
+		// copia gli elementi rimasti della seconda metà (se ce ne sono)
+		while(new_m <= high) {
+		    aux[x] = array[new_m];
+		    new_m++;
+		    x++;
+		}
+		
+		
+		while(l <= medium) aux[x++] = array[l++];
+		while(new_m <= high) aux[x++] = array[new_m++];
+		
+		for(start = 0 ; start < x  ; start++)
+		{
+			array[low+start] = aux[start];
+		}
+		
+	}
 	
-	
-}
+} // End Of Class
 		
 		
 		

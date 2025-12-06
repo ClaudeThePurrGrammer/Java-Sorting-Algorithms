@@ -5,20 +5,22 @@ import java.util.Arrays;
 
 public class Main 
 {
-	
+	// RANDOM INITIALIZING
 	 static Random random = new Random();
+	//--------------------
 
 	
 	
 	
 	public static void main(String args[])
 	{
-		
+		//INITIALIZING
 		Sorting sort = new Sorting();
 		sort.dim = Integer.parseInt(args[0]) ; 
 		int[] unsorted_array = RandomInitialization(sort.dim);
+		//-------------
 		
-		
+		//Start of Program
 		sort.array = Arrays.copyOf(unsorted_array, unsorted_array.length)  ;
 		System.out.println("unsorted_array values :  ") ;
 		PrintArray(unsorted_array) ; 
@@ -32,7 +34,7 @@ public class Main
 			PrintArray(sort.array); 
 			sort.array = Arrays.copyOf(unsorted_array, unsorted_array.length)  ;
 		}
-		while(!(s.equals("EXIT"))) ; 
+		while(!(s.equals("EXIT"))) ; //End Of Program
 			
 		
 		
@@ -42,7 +44,7 @@ public class Main
 		
 	}
 	
-	
+	//PRINT ARRAY VALUES
 	private static void PrintArray(int[] array) 
 	{
 		
@@ -51,7 +53,9 @@ public class Main
 			System.out.println(" "+ (printindex+1)+"°: " + array[printindex]);
 		
 	}
-
+	//--------------------
+	
+	//SETTING SEED 
 	private static int[] RandomInitialization(int dim)
 	{
 		int[] initializable_array = new int[dim] ;
@@ -60,7 +64,7 @@ public class Main
 		return initializable_array ; 
 		
 	}
-	
+	//---------------
 
 }
 		

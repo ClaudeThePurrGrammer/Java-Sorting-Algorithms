@@ -10,7 +10,7 @@ This project contains implementations of the most fundamental sorting algorithms
 - **Bubble Sort**  
 - **Selection Sort**  
 - **Insertion Sort**  
-- **Merge Sort**  -> Currently Unavaliable
+- **Merge Sort** 
 - **Quick Sort**  
 - **Shell Sort**
 
